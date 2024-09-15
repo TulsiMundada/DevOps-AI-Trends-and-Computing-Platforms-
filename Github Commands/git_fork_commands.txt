@@ -1,0 +1,10 @@
+> git clone https://github.com/daipractice/AKP-March-2024.git
+> cd AKP-March-2024
+> touch test_new1.txt
+> touch test_new2.txt
+> echo final_hello >  test_new3.txt
+> ls -l
+> git add .
+> git commit . -m "New files added to fork"
+> git log
+> git push -u origin main
