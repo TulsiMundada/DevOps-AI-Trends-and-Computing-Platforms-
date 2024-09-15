@@ -1,0 +1,29 @@
+> mkdir git-branch-merge-test
+> cd git-branch-merge-test
+> git init
+> sudo nano hello.py
+> git add .
+> git commit . -m "First commit"
+> git checkout -b bug-1-branch
+> git checkout -b bug-2-branch
+> git branch
+> git checkout bug-1-branch
+> sudo nano hello.py
+> git add .
+> git commit . -m "Bug fixing 1"
+> git checkout bug-2-branch
+> sudo nano hello.py
+> git add .
+> git commit . -m "Bug fixing 2"
+> git branch
+> git merge bug-1-branch
+> sudo nano hello.py
+> git add .
+> git commit . -m "Bug conflict resolved"
+> git merge bug-1-branch
+> git branch
+> git switch master
+> git merge bug-2-branch
+> git branch -d bug-1-branch
+> git branch -d bug-2-branch
+> git branch
