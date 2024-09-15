@@ -1,0 +1,19 @@
+> mkdir git-branch-demo
+> cd git-branch-demo
+> sudo nano hello.py
+> ls -l
+> git init
+> git status
+> git checkout -b bug-1-branch
+> git checkout -b bug-2-branch
+> git checkout bug-1-branch
+> git add .
+> git commit . -m "Adding files to branch demo"
+> git checkout bug-1-branch
+> git branch
+> sudo nano hello.py
+> git add .
+> git commit -m "File modified by developer 1"
+> git status
+> git checkout bug-2-branch
+  
