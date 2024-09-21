@@ -1,0 +1,31 @@
+> mkdir docker-compose-apache-demo
+> cd docker-compose-apache-demo
+> mkdir myapp
+> cd myapp
+> sudo nano index.html
+> cd ..
+> sudo nano docker-compose.yml     --> Code below
+> docker compose up
+> docker compose down
+
+
+
+
+
+************** Code for docker-compose.yml **********
+(be very careful of indentation here)
+
+
+services:
+  apache:
+    image: httpd:2.4
+    ports:
+    - "80:80"
+    volumes:
+    - ./myapp:/usr/local/apache2/htdocs/
+
+
+
+
+
+
