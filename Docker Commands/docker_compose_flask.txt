@@ -1,0 +1,61 @@
+> sudo usermod -aG docker $USER
+> newgrp docker  
+
+
+
+> mkdir docker-compose-flask
+> cd docker-compose-flask
+> sudo nano main.py
+> sudo nano Dockerfile
+> sudo nano docker-compose.yml
+> sudo nano requirements.txt
+> ls -l
+> docker compose up
+> docker compose down
+
+
+
+
+
+
+
+
+**************** Code for Dockerfile ************
+
+FROM      python:3.9.1
+WORKDIR   /python-flask
+ADD       . /python-flask
+RUN       pip install -r requirements.txt
+
+
+
+
+************** Code for docker-compose.yml **********
+(be very careful of indentation here)
+
+services:
+  app:
+    build: .
+    command: python main.py 
+    ports: 
+      - "5000:5000" 
+
+
+
+*************** Code for main.py **********************
+
+from flask import Flask
+app = Flask(__name__)
+
+@app.route('/')
+def hello_world():
+  return 'Hello World'
+
+if __name__ == '__main__':
+  app.run(host="0.0.0.0", debug = True)
+
+
+
+
+************ Text in requirements.txt  *************
+flask
