@@ -1,0 +1,45 @@
+> sudo usermod -aG docker $USER
+> newgrp docker
+
+> mkdir docker-compose-java
+> cd docker-compose-java
+> sudo nano HelloWorld.java      
+> sudo nano Dockerfile            --> code given below
+> sudo nano docker-compose.yml    --> code given below 
+> ls
+> docker compose up
+> docker network ls
+> docker compose down
+
+
+
+
+public class HelloWorld {
+        public static void main(String args[]){
+                System.out.println("Hello World");
+                }
+        }
+
+
+
+
+**************** Code for Dockerfile ************
+
+
+FROM      openjdk:latest
+WORKDIR  /app
+COPY     . /app
+RUN      javac HelloWorld.java
+CMD      ["java", "HelloWorld"]
+
+
+
+************** Code for docker-compose.yml **********
+(be very careful of indentation here)
+
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
