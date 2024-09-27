@@ -1,0 +1,38 @@
+> sudo usermod -aG docker $USER
+> newgrp docker
+
+--> make new directory (not in docker-python-sql)
+> mkdir webpages
+> cd webpages
+> echo 'Hi from inside our CDAC nginx container!' > index.html
+> cd ..
+> docker run -p 8080:80 --name=another_nginx -v ${PWD}/webpages:/usr/share/nginx/html:ro -d nginx
+
+--> Open localhost:8080 in web browser
+
+> cd webpages
+
+> echo 'Let us modify the page' > index.html
+--> Refresh localhost:8080
+
+> sudo nano index.html     --> code given below
+--> Refresh localhost:8080
+
+
+
+
+
+
+
+
+**************** Code in index.html *********************
+
+
+<h1>Hello from CDAC</h1>
+<p id="datetime"></p>
+
+<script type = "text/javascript">
+  var now = new Date();
+  var datetime = now.toLocaleString();
+  document.getElementById("datetime").innerHTML = datetime;
+</script>
