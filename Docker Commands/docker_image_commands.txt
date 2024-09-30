@@ -1,0 +1,21 @@
+> sudo usermod -aG docker $USER
+> newgrp docker
+> sudo systemctl restart docker
+> mkdir hello-docker-python
+> cd hello-docker-python
+> sudo nano hello.py    --> write "Hello world"
+> python hello.py       --> to check docker doesnt use anything local
+> sudo nano Dockerfile  --> write commands given below
+> ls
+> docker build -t my-python-hello-world .
+> docker images
+> docker run my-python-hello-world
+
+
+
+****** Commands to write in Dockerfile ******
+
+FROM      python:3.9-alpine3.15
+WORKDIR   /app
+COPY      hello.py .
+CMD       ["python", "hello.py"]
