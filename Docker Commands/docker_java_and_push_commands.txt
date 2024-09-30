@@ -1,0 +1,36 @@
+> sudo usermod -aG docker $USER
+> newgrp docker
+> sudo systemctl restart docker
+> mkdir hello-docker-java
+> cd hello-docker-java
+> sudo nano hello.java       --> Write below code
+> sudo nano Dockerfile       --> Write below code
+> docker build -t hello-java-docker .
+> docker run hello-java-docker
+> docker login
+> docker tag hello-java-docker daipractice/hello-java-docker:1.0    --> daipractice is username
+> docker push daipractice/hello-java-docker:1.0                     --> daipractice is username
+
+
+
+
+
+
+
+********* Code to be written in java file **********
+
+public class hello {
+        public static void main (String args[]) {
+                System.out.println("Hello World!!");
+                }
+        }
+
+
+
+********* Code to be written in docker file **********
+
+FROM      openjdk:latest
+WORKDIR   /app
+COPY      . /app
+RUN      javac hello.java
+CMD       ["java", "hello"]
