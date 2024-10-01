@@ -1,0 +1,16 @@
+> sudo usermod -aG docker $USER
+> newgrp docker
+
+--> run mysql container on server
+> docker run --name db2 -d -p 3307:3306 -e MYSQL_ROOT_PASSWORD=cdac mysql:latest
+
+> docker exec -it db2 mysql -p
+Enter password: cdac
+
+
+# CREATE DATABASE cdac;
+# USE cdac;
+# CREATE TABLE student(prn INTEGER, name CHAR(50), course CHAR(20));
+# INSERT INTO student VALUES(1, "Student 1", "DAI");
+# SELECT * FROM student;
+# exit
