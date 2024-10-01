@@ -1,0 +1,83 @@
+> sudo usermod -aG docker $USER
+> newgrp docker
+
+--> to run mysql server 
+> docker run -d -p 3306:3306 --name db -e MYSQL_ROOT_PASSWORD=cadc123 mysql:latest
+
+     
+-->  !!!! Dangerous Command !!!! DO NOT RUN unless necessary
+> docker system prune
+
+
+
+--> split terminal to run two busybox containers simulatenously
+--> give same commands in both
+
+> sudo usermod -aG docker $USER
+> newgrp docker
+> docker run -it busybox            --> running busybox
+
+# hostname -i
+# ping 172.17.0.4   --> write IP address of other busybox
+# hostname          --> to get hostname
+# ping 7ebe017a1c82    --> hostname of other busybox
+# exit
+
+
+
+--------------------------------------------------------------------
+
+
+--> run busybox on one terminal
+> docker run -it busybox
+
+--> on another terminal 
+> docker ps
+> docker inspect 2ab  --> container id of another busybox
+> docker network ls
+
+--> to create new (custom) network
+> docker network create cdac 
+
+> docker network ls
+
+
+--> exit previous busybox running in other terminal 
+# exit
+
+
+------------------------------------------------------------------------
+
+
+
+
+--> On both terminals
+--> running busybox in created network
+
+> docker container run -it --network cdac busybox
+
+# hostname -i
+# ping 172.17.0.4   --> write IP address of other busybox
+# hostname          --> to get hostname
+# ping 7ebe017a1c82    --> hostname of other busybox (now we can ping using hostname)
+# exit
+
+
+-------------------------------------------------------------------
+
+
+--> On both terminals
+--> creating busybox with name and running on custom network
+
+
+--> terminal 1
+> docker container run -it --network cdac --name busybox01 busybox
+
+--> terminal 2
+> docker container run -it --network cdac --name busybox02 busybox
+
+--> terminal 2
+# ping busybox01 
+
+--> terminal 1
+# ping busybox02
