@@ -1,0 +1,13 @@
+> docker info
+
+--> check if swarm is active, if not run next command
+> docker swarm init
+
+> docker node ls
+> docker service create nginx
+> docker service ls
+
+--> to make 10 replicas, after scale write id
+> docker service scale m1dvnlxjhpdu=10
+
+> docker ps
