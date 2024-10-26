@@ -1,0 +1,84 @@
+> sudo usermod -aG docker $USER
+> newgrp docker
+> mkdir docker-python-sql
+> cd docker-python-sql
+> sudo nano insert_students.py      --> code given below
+> sudo nano Dockerfile              --> code given below
+> docker network create my-network1
+> docker run --name mysql --network my-network1 -d -p 3308:3306 -e MYSQL_ROOT_PASSWORD=pass -v mysql:/var/lib/mysql mysql:8
+> docker build -t python-mysql .
+> docker run --network my-network1 python-mysql   
+
+
+
+
+
+*********************  Code in insert_students.py   ******************************
+
+import mysql.connector
+import os
+import time
+
+students = [ ("202403001", "Alice", "DAI"),("202403002", "Bob", "DBDA"),("202403003", "Charlie", "DAC")]
+
+mydb = None
+
+try:
+    mydb = mysql.connector.connect( host = 'mysql', user ='root',password='pass',port=3306)
+    mycursor = mydb.cursor() 
+    mycursor.execute("CREATE DATABASE IF NOT EXISTS cdac")
+    mycursor.execute("USE cdac")      # switch to the newly created database 
+        
+    mycursor.execute("""
+    CREATE TABLE IF NOT EXISTS student(
+    PRN VARCHAR(255) NOT NULL,
+    Name VARCHAR(255) NOT NULL,
+    Course VARCHAR(255) NOT NULL,
+    PRIMARY KEY (PRN))""")
+    
+    sql = "INSERT INTO student (PRN, Name, Course) VALUES (%s, %s, %s)"
+    mycursor.executemany(sql, students)
+    mydb.commit()
+    print(f"{mycursor.rowcount} records successfully inserted.")
+    
+    sql = "SELECT * FROM student"
+    mycursor.execute(sql)
+    result = mycursor.fetchall()
+
+    for row in result:
+        print(row)
+
+except mysql.connector.Error as err:
+        print("Error: ", err)
+    
+finally:
+    # Close the connection
+    if mydb and mydb.is_connected():
+        mycursor.close()
+        mydb.close()
+        print("Connection closed.")
+
+
+
+
+
+
+
+******************* Code in Dockerfile ******************** 
+
+
+FROM        python:3.9-alpine3.15
+WORKDIR     /app
+
+#Install dependencies required by mysql-connector-python
+RUN         apk add --no-cache gcc musl-dev python3-dev libffi-dev openssl-dev
+
+#Install mysql-connector-python
+RUN         pip install mysql-connector-python
+
+COPY        insert_students.py .
+CMD         ["python", "insert_students.py"]
+
+
+
+
