@@ -1,0 +1,16 @@
+> sudo usermod -aG docker $USER
+> newgrp docker
+> sudo systemctl restart docker
+> docker run -dit --name=my_ubuntu ubuntu
+> docker exec -it my_ubuntu /bin/bash
+# pwd
+# ls
+# sudo nano test.txt
+# nano test.txt
+# apt-get update
+# apt install nano
+# nano test.py
+# exit
+> docker ps
+> docker stop eb9
+> docker rm eb9
