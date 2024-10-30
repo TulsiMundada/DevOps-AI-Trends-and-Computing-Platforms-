@@ -1,0 +1,42 @@
+> sudo usermod -aG docker $USER
+> newgrp docker
+
+> docker network create my-network
+> docker container run --name mysql-container --network my-network -e 
+> docker container run --name tomcat-container --network my-network -p
+
+
+--> in tomcat contaoner
+> docker exec -it tomcat-container /bin/bash
+> apt-get update
+> apt-get install -y mysql-client
+> mysql -h mysql-container -uroot -ppass
+
+-->opening mysql 
+# CREATE DATABASE dai;
+# USE dai;
+# CREATE TABLE students_tbl(prn INTEGER, name CHAR(30));
+# INSERT INTO students_tbl VALUES(1, "My name");
+# SELECT * FROM students_tbl;
+# exit
+
+
+> docker ps
+
+--> stoping mysql conatiner
+> docker stop mysql-container
+
+--> staring mysql conatiner
+> docker start mysql-container
+
+-->opening tomcat server
+> docker exec -it tomcat-container /bin/bash
+
+--> opeong mysql
+> mysql -h mysql-container -uroot -ppass
+
+# USE dai;
+# SELECT * FROM students_tbl;
+# exit;
+
+ 
