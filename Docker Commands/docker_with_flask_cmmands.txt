@@ -1,0 +1,74 @@
+******* Make container accessible in browser *********
+
+
+> sudo usermod -aG docker $USER
+> newgrp docker
+> sudo systemctl restart docker
+> docker run --name my_nginx -d -p 8080:80 nginx
+acd1b492416f073009d584065b33cd93d85bf2c10aa1837ca7ccac16f764845f
+> docker stop acd
+> docker run --name my_nginx2 -d -p 9999:80 nginx
+41c2b7062dff99f726ed24e2e27ea041d8ff07ec6df964fd78e0e137cb58a971
+> docker stop 41c
+> docker rm 41c
+
+
+******* Docker with Flask **************
+
+
+> mkdir docker-flask-python
+> cd docker-flask-python
+> sudo nano hello.py            --> Code below
+> sudo nano Dockerfile          --> Code below
+> sudo nano requirements.txt    --> Text below
+> docker build -t docker-flask-hello .
+> docker run -p 5000:5000 docker-flask-hello
+
+-- Open localhost:5000 on browser --
+
+
+
+
+
+
+
+
+
+
+
+
+
+******* Code in Dockerfile *********
+
+
+FROM     python:3.9-alpine3.15
+WORKDIR  /app
+COPY     . /app
+RUN      pip install -r requirements.txt    --> put all dependencies in thi file
+EXPOSE   5000                               --> container port number for python
+CMD      ["python", "hello.py"]
+
+
+
+
+******* Lines in requirements.txt *********
+
+flask
+
+
+
+
+
+******* Code in hello.py file *********
+
+
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route("/")
+def hello_world():
+        return "Hello World!!"
+
+if __name__== "__main__":
+        app.run(host = "0.0.0.0" , debug = True)
